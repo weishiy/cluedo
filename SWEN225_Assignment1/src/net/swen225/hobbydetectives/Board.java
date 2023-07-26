@@ -7,7 +7,7 @@ import java.util.*;
 
 import java.util.*;
 public class Board {
-    private static int BOARD_SIZE = 24;
+    private static final int BOARD_SIZE = 24;
     private Map<Characters, Location> startLocations;
     private Map<Estates, Estate> estateMap;
 
@@ -15,10 +15,10 @@ public class Board {
 
     private Location[][] map;
 
-    public Board(Location[][] map,  Map<Estates, Estate> estateMap, Map<Characters, Location> startingLocations){
-        this.map = map;
-        this.estateMap = estateMap;
-        this.startLocations = startingLocations;
+    public Board(){
+        this.map = new Location[BOARD_SIZE][BOARD_SIZE];
+        this.estateMap = new HashMap<>();
+        this.startLocations = new HashMap<>();
         setWeapons(); // adds the random weapons to different rooms
     }
 

@@ -1,15 +1,22 @@
 package net.swen225.hobbydetectives;
 
-import java.util.Queue;
-
 public class Game {
 
     private Board board; // game board
 
+    /**
+     * Main constructor, set up for game's need, but not finished yet.
+     */
+    public Game() {
+        this.board = new Board();
+    }
 
-
-    public static void main(String[] args){
-        System.out.println("Hello, World!");
+    /**
+     * Main function for running the game
+     * @param args
+     */
+    public static void main(String[] args) {
+        Game game = new Game();
     }
 
 }
