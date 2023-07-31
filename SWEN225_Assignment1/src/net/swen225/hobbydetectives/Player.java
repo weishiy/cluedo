@@ -1,103 +1,89 @@
 package net.swen225.hobbydetectives;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
 
-    private Characters character; // The character the player represents
-    private Location currentLocation; // current location of the player
-    private Set<Card> hand; // the list of the cards the player has
-    private Estate roomIn; // the room the player is currently in
-    private boolean lostGame; // player state if they have lost the game
-    //private Estate lastRoom;
+    private final int x, y;
+    private final String name;
+    private final Color color;
+    private Tile currentTileLocation;
+    private Locations currentRoom = Locations.BOARD;
+    private final ArrayList<RefuCard> currentCards = new ArrayList<>();
 
-    /**
-     * Player constructor
+    /***
+     * Creates a new Player object
+     * @param name String - name of the player
+     * @param color Color - colour representation of the player
+     * @param x Int - X coordinate of the player's starting location
+     * @param y Int - Y coordinate of the player's starting location
+     * @param cards Variable - RefuCard - A variable amount of refutation cards that the player may have
      */
-
-    public Player(Characters character) {
-        this.character = character;
-        this.hand = new HashSet<>();
-        this.roomIn = null;
-        this.lostGame = false;
+    public Player(String name, Color color, int x, int y, RefuCard... cards){
+        this.name = name;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        Collections.addAll(currentCards, cards);
     }
 
-
-    /**
-     * get the character for player's representative
-     */
-    public Characters getCharacter() {
-        return character;
+    public int x() {
+        return x;
     }
 
-    /**
-     * Add a card to the players' hand
-     *
-     * @param card
-     */
-    public void addToHand(Card card) {
-        hand.add(card);
+    public int y() {
+        return y;
     }
 
-    /**
-     * Get all cards for player's hand
-     */
-
-    public Set<Card> getHands() {
-        return hand;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * print the cards which the player hold
+    public Color getColor() {
+        return color;
+    }
+
+    public void setCurrentRoom(Locations currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public Locations getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentTileLocation(Tile currentTileLocation) {
+        this.currentTileLocation = currentTileLocation;
+    }
+
+    public Tile getCurrentTileLocation() {
+        return currentTileLocation;
+    }
+
+    /***
+     * Checks if the player's refutation card contains a given query
+     * @param query String - query to search by
+     * @return True if the player does, else false.
      */
-    public void printHand() {
-        System.out.print("player " + character + " cards: ");
-        for (Card card : hand) {
-            System.out.print(card + " ");
+    public boolean queryCards(String query) {
+        for (RefuCard card : currentCards)
+            if (card.value().equals(query))
+                return true;
+        return false;
+    }
+
+    /***
+     * Moves the player into the given tile or room depending on the data of the tile
+     * @param newTileLoc Tile - New tile to be moved into
+     */
+    public void move(Tile newTileLoc){
+        //checks if it's a door or not
+        if(newTileLoc.value().equals("@")){
+            setCurrentRoom(newTileLoc.locations());
+        } else {
+            setCurrentTileLocation(newTileLoc);
         }
-        System.out.println();
     }
 
-    /**
-     * set player's currented location
-     * @param location
-     */
-    public void setLocation(Location location) {
-        this.currentLocation = location;
-    }
-
-    /**
-     * return the player's location
-     */
-    public Location getCurrentLocation(){return currentLocation;}
-    /**
-     * is the player active or not
-     */
-    public boolean isLostGame() {
-        return lostGame;
-    }
-
-    /**
-     * Set the player state
-     * @param lostGame
-     */
-    public void setLostGame(boolean lostGame){
-        this.lostGame = lostGame;
-    }
-
-    /**
-     * return the character representation on the board
-     */
-    @Override
-    public String toString() {
-        return switch (character) {
-            case Lucilla -> "L";
-            case Bert -> "B";
-            case Malina -> "M";
-            case Percy -> "P";
-        };
-    }
 }
-
