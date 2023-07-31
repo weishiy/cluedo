@@ -20,7 +20,7 @@ public record Location(int x, int y, Estate estate, int door, Player player, boo
      * @param estate
      * @param door
      */
-    public Location(int y, int x, Estate estate, int door) {
+    public Location(int x, int y, Estate estate, int door) {
         this(y, x, estate, door, null, true);
     }
 

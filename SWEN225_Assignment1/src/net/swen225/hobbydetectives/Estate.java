@@ -7,18 +7,18 @@ import java.util.*;
  * represent each estate with location and items(characters or weapons) in the game.
  */
 public class Estate {
-    private final Estates estate;
+    private final EstatesCard estate;
     private final Set<Card> items;
     private final Map<Integer, Location> locations;
 
     /**
      * A room constructor that accepts a room enum and initializes the items.
-     * @param estates
+     * @param estatesCard
      * @param estate
      * @param items
      * @param locations
      */
-    public Estate(Estates estates, Estates estate, Set<Card> items, Map<Integer, Location> locations) {
+    public Estate(EstatesCard estatesCard, EstatesCard estate, Set<Card> items, Map<Integer, Location> locations) {
         this.estate = estate;
         this.items = items;
         this.locations = locations;
@@ -65,7 +65,7 @@ public class Estate {
      * Returns the current estate.
      *
      */
-    public Estates getEstate() {
+    public EstatesCard getEstate() {
         return estate;
     }
 
