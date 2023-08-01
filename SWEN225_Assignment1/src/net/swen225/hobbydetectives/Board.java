@@ -1,12 +1,17 @@
 package net.swen225.hobbydetectives;
 
 import java.awt.*;
-import java.util.Map;
+import java.util.*;
+
 
 public class Board {
 
     private final Tile[][] board = new Tile[24][24];
     private Map<WeaponsCard, Location> weaponsLocation; // In which estate is the weapon stored
+    private Map<Player, Tile> playerTileMap = new HashMap<>();
+
+    private Map<EstatesCard, Tile> EstateTileMap = new HashMap<>();
+
     /***
      * Creates a new board for the game to operate on.
      *
@@ -52,10 +57,10 @@ public class Board {
         addRoom(17, 11, 18, 12, Locations.GREY_AREA);
 
        // initial players' locations
-       setPlayer(new Player(CharactersCard.Bert, Color.YELLOW,9,1));
-       setPlayer(new Player(CharactersCard.Lucilla, Color.GREEN,1,11));
-       setPlayer(new Player(CharactersCard.Percy, Color.RED,15,22));
-       setPlayer(new Player(CharactersCard.Malina, Color.BLUE,22,9));
+       setTilePlayer(new Player(CharactersCard.Bert, Color.YELLOW,9,1));
+       setTilePlayer(new Player(CharactersCard.Lucilla, Color.GREEN,1,11));
+       setTilePlayer(new Player(CharactersCard.Percy, Color.RED,15,22));
+       setTilePlayer(new Player(CharactersCard.Malina, Color.BLUE,22,9));
 
 
         for(int x = 0; x < 24; x++)
@@ -63,6 +68,7 @@ public class Board {
                 if(board[x][y] == null)
                     board[x][y] = new Tile(x, y, "_", Locations.BOARD);
     }
+
 
     /***
      * Creates a room on the board
@@ -74,6 +80,7 @@ public class Board {
      */
     private void addRoom(int x1, int y1, int x2, int y2, Locations room){
         for (int x = x1; x < x2; x++) {
+
             board[x][y1] = new Tile(x, y1, "#", room);
             board[x][y2] = new Tile(x, y2, "#", room);
         }
@@ -99,16 +106,40 @@ public class Board {
      * @param y Integer - Represents Y axis
      * @return Tile - Tile found at X and Y coordinates
      */
-    private Tile inspectTile(int x, int y){
+    public Tile inspectTile(int x, int y){
         return board[x][y];
     }
 
-    private void setPlayer(Player player){
+    private void setTilePlayer(Player player){
         int x = player.x();
         int y = player.y();
-        board[x][y] = new Tile(x, y, "*", player.getCurrentRoom());
+        Tile tile = new Tile(x, y, "*", player.getCurrentRoom());
+        board[x][y] = tile;
+        playerTileMap.put(player, tile); // to store the relationship between player and tile
+    }
+    /**
+     * Returns the Tile associated with the given Player.
+     *
+     * @param player The Player for which to retrieve the Tile.
+     * @return The Tile associated with the given Player, or null if the Player is not found in the playerTileMap.
+     */
+    public Tile getTileForPlayer(Player player) {
+        return playerTileMap.get(player); //
     }
 
+    /**
+     * Returns the Player associated with the given Tile.
+     * @param tile tile The Tile for which to retrieve the associated Player.
+     * @return The Player associated with the given Tile, or null if the Tile is not found in the playerTileMap.
+     */
+    public Player getPlayerForTile(Tile tile) {
+        for (Map.Entry<Player, Tile> entry : playerTileMap.entrySet()) {
+            if (entry.getValue() == tile) {
+                return entry.getKey(); //
+            }
+        }
+        return null; //
+    }
     /***
      * Returns a string representation of the current game board
      * @return String - The board
@@ -150,8 +181,8 @@ public class Board {
         }
     }
 
-    public static void main(String[] args) {
-        Board board1 = new Board();
-        System.out.println(board1);
-    }
+//    public static void main(String[] args) {
+//        Board board1 = new Board();
+//        System.out.println(board1);
+//    }
 }

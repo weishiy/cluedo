@@ -1,9 +1,7 @@
 package net.swen225.hobbydetectives;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Player {
 
@@ -18,6 +16,7 @@ public class Player {
     private boolean hasLost; // player state if they have lost the game
 
     private Location roomIn; // the room the player is currently in
+
     /***
      * Creates a new Player object
      * @param name String - name of the player
@@ -34,7 +33,7 @@ public class Player {
         Collections.addAll(currentCards, cards);
     }
 
-    public Player(CharactersCard character, Color color, int x, int y) {
+    public Player(CharactersCard character,Color color, int x, int y) {
         this.currentCards =new ArrayList<>();
         this.character = character;
         this.hasLost = false;
@@ -42,8 +41,6 @@ public class Player {
         this.color = color;
         this.x = x;
         this.y = y;
-
-
     }
 
     public int x() {
@@ -56,6 +53,9 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+    public CharactersCard getCharacter() {
+        return character;
     }
 
     public Color getColor() {
@@ -89,6 +89,7 @@ public class Player {
 //                return true;
 //        return false;
 //    }
+
 
     /***
      * Moves the player into the given tile or room depending on the data of the tile
