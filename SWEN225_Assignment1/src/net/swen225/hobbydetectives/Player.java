@@ -6,7 +6,6 @@ import java.util.Collections;
 
 public class Player {
 
-    private final int x, y;
     private final String name;
     private final Color color;
     private Tile currentTileLocation;
@@ -17,24 +16,14 @@ public class Player {
      * Creates a new Player object
      * @param name String - name of the player
      * @param color Color - colour representation of the player
-     * @param x Int - X coordinate of the player's starting location
-     * @param y Int - Y coordinate of the player's starting location
+     * @param location Tile - player's starting location
      * @param cards Variable - RefuCard - A variable amount of refutation cards that the player may have
      */
-    public Player(String name, Color color, int x, int y, RefuCard... cards){
+    public Player(String name, Color color, Tile location, RefuCard... cards){
         this.name = name;
         this.color = color;
-        this.x = x;
-        this.y = y;
+        this.currentTileLocation = location;
         Collections.addAll(currentCards, cards);
-    }
-
-    public int x() {
-        return x;
-    }
-
-    public int y() {
-        return y;
     }
 
     public String getName() {
